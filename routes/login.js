@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt')
 
 //Gets back all users
 router.get("/", async (req, res) => {
@@ -29,17 +30,17 @@ router.post("/", async (req, res) => {
 	}
 });
 
-//Specific post
-router.get("/:userId", async (req, res) => {
+//Specific user
+router.get("/:tuserName", async (req, res) => {
 	try {
-		const user = await User.findById(req.params.userId);
+		const user = await User.findById(req.params.tuserName);
 		res.json(user);
 	} catch (err) {
 		res.json({ message: err });
 	}
 });
 
-//Delete a post
+//Delete a user
 router.delete("/:userId", async (req, res) => {
 	try {
 		const removeUser = await User.remove({ _id: req.params.userId });
@@ -64,7 +65,7 @@ router.patch("/:userId", async (req, res) => {
 module.exports = router;
 
 //Log in
-router.get("/:userId", async (req, res) => {
+router.get("/go", async (req, res) => {
 	try {
 		const user = await User.findById(req.params.userId);
 		res.json(user);
