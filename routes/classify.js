@@ -30,7 +30,6 @@ router.post("/", async (req, res) => {
 });
 
 const classify = (data) => {
-	const age = range(1, 99);
 	const race = ["white", "black", "indian", "asian"];
 	const gender = ["male", "female", "transgender", "other"];
 	const religion = [

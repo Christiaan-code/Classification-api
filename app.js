@@ -20,18 +20,6 @@ app.use("/classify", classRoute);
 
 function authenticateToken(req, res, next) {}
 
-//Routes
-
-// app.post("/loginss", (req, res) => {
-// 	//Authenticate user
-
-// 	const username = req.body.username;
-// 	const user = { name: username };
-
-// 	const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-// 	res.json({ accessToken: accessToken });
-// });
-
 //Connect to db
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, () => {
 	console.log("Connected to db");
