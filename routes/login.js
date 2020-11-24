@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require("../models/User");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 
 //Gets back all users
 router.get("/", async (req, res) => {
