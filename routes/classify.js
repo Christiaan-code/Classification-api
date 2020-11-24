@@ -3,29 +3,26 @@ const Classify = require("../models/ClassData");
 const mongoose = require("mongoose");
 
 //Routes
-//Gets back all posts
-router.get("/", async (req, res) => {
-	try {
-		const classData = await Classify.find();
-		res.json(classData);
-	} catch (err) {
-		res.json({ message: err });
-	}
-});
 
 //Submits post
 router.post("/", async (req, res) => {
-	const post = new Classify({
-		title: req.body.title,
-		description: req.body.description,
-	});
+	const data = [
+		"White",
+		"Male",
+		"Christian",
+		"9903235278088",
+		"Single",
+		"christiaandpreez@gmail.com",
+	];
 
-	console.log(req.body);
+	
 	try {
-		const savedPost = await post.save();
-		res.json(savedPost);
-	} catch (err) {
-		res.json({ message: err });
+		// data = req.body.data;
+		const returnData = classify(data);
+		console.log(returnData);
+		res.send(returnData);
+	} catch (error) {
+		res.status(400).send(error);
 	}
 });
 
@@ -47,24 +44,19 @@ const classify = (data) => {
 	const address = /^\d+\s[A-z]+\s[A-z]+/;
 
 	data = data.map((item) => {
-		if (age.includes(item.toLowerCase())) return (item = [item, "Age"]);
-		else if (race.includes(item.toLowerCase()))
-			return (item = [item, "Race"]);
+		if (race.includes(item.toLowerCase())) return (item = [item, "Race"]);
 		else if (gender.includes(item.toLowerCase()))
-			return (item = [item, "Race"]);
+			return (item = [item, "Gender"]);
 		else if (religion.includes(item.toLowerCase()))
-			return (item = [item, "Race"]);
-		else if (id.includes(item.toLowerCase()))
-			return (item = [item, "Race"]);
-		else if (cellNumber.includes(item.toLowerCase()))
-			return (item = [item, "Race"]);
+			return (item = [item, "Religion"]);
+		else if (id.test(item)) return (item = [item, "ID"]);
+		else if (cellNumber.test(item)) return (item = [item, "Cell Number"]);
 		else if (maritalStatus.includes(item.toLowerCase()))
-			return (item = [item, "Race"]);
-		else if (email.includes(item.toLowerCase()))
-			return (item = [item, "Race"]);
-		else if (address.includes(item.toLowerCase()))
-			return (item = [item, "Race"]);
+			return (item = [item, "Marital Status"]);
+		else if (email.test(item)) return (item = [item, "Email"]);
+		else if (address.test(item)) return (item = [item, "Address"]);
 	});
+	return data;
 };
 
 module.exports = router;
